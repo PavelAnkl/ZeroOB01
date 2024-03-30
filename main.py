@@ -1,49 +1,58 @@
-class Task:
-    def __init__(self, description, deadline, status=False):
-        """Инициализация новой задачи с описанием, сроком выполнения и статусом."""
-        self.description = description
-        self.deadline = deadline
-        self.status = status
+# Создай класс `Store`.
+# Атрибуты класса: `name`: название магазина, `address`: адрес магазина, `items`: словарь, где ключ - название товара, а значение - его цена.
+# Например, `{'apples': 0.5, 'bananas': 0.75}`.
+# `__init__ - конструктор, который инициализирует название и адрес, а также пустой словарь для `items`
+class Store:
+    def __init__(self, name, address):
+        self.name = name
+        self.address = address
+        self.items = {}
 
-    def __str__(self):
-        """Возвращает строковое представление задачи."""
-        return f"{self.description}, Дата выполнения: {self.deadline}, Статус: {'Выполнена' if self.status else 'Не выполнена'}"
+    # метод для добавления товара в ассортимент
+    def add_item (self, item_name, price):
+        self.items[item_name] = price
+        print(f'Товар {item_name} был добавлен в магазин {self.name}')
 
-class TaskManager:
-    def __init__(self):
-        """Инициализация менеджера задач с пустым списком задач."""
-        self.tasks = []
+    # метод для удаления товара из ассортимента
+    def remove_item(self, item_name):
+        if item_name in self.items:
+            del self.items[item_name]
+            print(f'Товар {item_name} удален из магазина {self.name}')
 
-    def add_task(self, description, deadline):
-        """Добавляет новую задачу в список задач."""
-        new_task = Task(description, deadline)
-        self.tasks.append(new_task)
-        print("Задача добалена.")
+    # метод для получения цены товара по его названию. Если товар отсутствует, возвращайте `None`
+    def get_price(self, item_name):
+        return self.items.get(item_name)
 
-    def mark_task_done(self, description):
-        """Отмечает задачу как выполненную по описанию."""
-        for task in self.tasks:
-            if task.description == description:
-                task.status = True
-                print(f"Задача '{description}' выполнена.")
-                return
-        print(f"Задача '{description}' не найдена.")
+    # метод для обновления цены товара
+    def update_price(self, item_name, new_price):
+        if item_name in self.items:
+            self.items[item_name] = new_price
+            print(f'Цена на товар {item_name} обновлена в магазине {self.name}')
+        else:
+            print(f'Товар {item_name} не найден')
 
-    def show_current_tasks(self):
-        """Выводит список текущих (не выполненных) задач."""
-        print("Список невыполненных задач:")
-        for task in self.tasks:
-            if not task.status:
-                print(task)
 
-# Пример использования классов Task и TaskManager
-if __name__ == "__main__":
-    manager = TaskManager()
-    manager.add_task("Тестовая задача 1", "2024-03-28")
-    manager.add_task("Тестовая задача 2", "2024-03-28")
+# Создай не менее трех различных магазинов с разными названиями, адресами и добавь в каждый из них несколько товаров
+store1 = Store('Пятерочка', 'Ленина, 15')
+store2 = Store('Магнит', 'Ленина, 45')
+store3 = Store('Ярче', 'Ленина, 80')
 
-    manager.show_current_tasks()
+store1.add_item('Хлеб', '25,50')
+store1.add_item('Молоко', '42,20')
+store1.add_item('Гречка', '37,10')
 
-    manager.mark_task_done("Тестовая задача 1")
+store1.remove_item('Хлеб')
 
-    manager.show_current_tasks()
+print(store1.get_price('Молоко'))
+
+store1.update_price('Гречка', '35,20')
+
+print(store1.get_price('Гречка'))
+
+
+
+
+
+
+
+
